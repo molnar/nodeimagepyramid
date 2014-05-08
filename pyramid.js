@@ -36,7 +36,7 @@ db.each("select zoom_level, tile_column, tile_row, tile_data from tiles", functi
       var x = row.tile_row.toString();;
       var td = row.tile_data;
 
-      fs.exists(z, function(exists){
+     /* fs.exists(z, function(exists){
         if(exists == false){
            fs.mkdirSync(z);
            process.chdir(z);
@@ -53,7 +53,7 @@ db.each("select zoom_level, tile_column, tile_row, tile_data from tiles", functi
 
             console.log(workingdir)
         }
-      });           
+      });           */
                  
      
    
