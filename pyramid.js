@@ -13,13 +13,11 @@ fs.exists('tile_data', function(exists){
     if(exists == false){
       fs.mkdirSync('tile_data');
       process.chdir('tile_data');
-      workingdir = process.cwd();
-      console.log("here1" + workingdir);      
+      workingdir = process.cwd();     
     }
     else{
       process.chdir('tile_data');
-      workingdir = process.cwd(); 
-      console.log("here2" + workingdir);
+      workingdir = process.cwd();      
     }     
 });
 
@@ -35,6 +33,26 @@ db.each("select zoom_level, tile_column, tile_row, tile_data from tiles", functi
       var y = row.tile_column.toString();;
       var x = row.tile_row.toString();;
       var td = row.tile_data;
+      console.log(workingdir)
+      if (fs.existsSync(z)) {
+          console.log("Enter "+z)
+      }else{
+        fs.mkdirSync(z);
+      };
+
+      process.chdir(z);
+      console.log(process.cwd());
+      if (fs.existsSync(y)) {
+          console.log("Enter "+y)
+      }else{
+        fs.mkdirSync(y);
+      };
+      process.chdir(y);
+      console.log(process.cwd());
+      //add fs.open to see if it already exists or something
+      fs.writeFile(x+'.png', td, function (err) {
+             console.log('error writing data')          
+           });
 
      /* fs.exists(z, function(exists){
         if(exists == false){
