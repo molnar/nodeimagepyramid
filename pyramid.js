@@ -21,62 +21,39 @@ fs.exists('tile_data', function(exists){
     }     
 });
 
-
-
-// process.chdir('tile_data');
-
+function flip_y(zoom, y){
+  return (Math.pow(2,zoom)-1) - y;
+}
 
 db.each("select zoom_level, tile_column, tile_row, tile_data from tiles", function(err, row) {
       process.chdir(workingdir);
            
-      var z = row.zoom_level.toString();;
-      var y = row.tile_column.toString();;
-      var x = row.tile_row.toString();;
+      var z = row.zoom_level.toString();
+      var x = row.tile_column.toString();
+      var y = row.tile_row.toString();
+      y = flip_y(z, y);
       var td = row.tile_data;
-      console.log(workingdir)
+      //console.log(workingdir)
       if (fs.existsSync(z)) {
-          console.log("Enter "+z)
+          //console.log("Enter "+z)
       }else{
         fs.mkdirSync(z);
       };
 
       process.chdir(z);
       console.log(process.cwd());
-      if (fs.existsSync(y)) {
-          console.log("Enter "+y)
+      if (fs.existsSync(x)) {
+          //console.log("Enter "+x)
       }else{
-        fs.mkdirSync(y);
+        fs.mkdirSync(x);
       };
-      process.chdir(y);
-      console.log(process.cwd());
+      process.chdir(x);
+      //console.log(process.cwd());
       //add fs.open to see if it already exists or something
-      fs.writeFile(x+'.png', td, function (err) {
+      fs.writeFile(y+'.png', td, function (err) {
              console.log('error writing data')          
            });
-
-     /* fs.exists(z, function(exists){
-        if(exists == false){
-           fs.mkdirSync(z);
-           process.chdir(z);
-           fs.writeFile(x+'.png', td, function (err) {
-             console.log('error writing data')          
-           });
-           console.log(workingdir)
-
-        }else{            
-            process.chdir(z);
-            fs.writeFile(x+'.png', td, function (err) {
-              console.log('error writing data')          
-            });
-
-            console.log(workingdir)
-        }
-      });           */
-                 
      
-   
-      
-
 });
 
 
